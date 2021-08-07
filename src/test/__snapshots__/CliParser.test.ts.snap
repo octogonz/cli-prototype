@@ -1,7 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CliParser Test Correctly tests stuff 1`] = `
+exports[`CliParser Every syntax feature 1`] = `
 Object {
-  "abc": 123,
+  "_testInput": "test-tool --global-flag",
+  "result": Object {},
+}
+`;
+
+exports[`CliParser Every syntax feature 2`] = `
+Object {
+  "_testInput": "test-tool --global-flag do-thing --action-flag",
+  "result": Object {},
+}
+`;
+
+exports[`CliParser Every syntax feature 3`] = `
+Object {
+  "_testInput": "test-tool do-thing --action-flag --global-flag",
+  "result": Object {},
 }
 `;

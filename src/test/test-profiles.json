@@ -1,0 +1,72 @@
+{
+  "testProfiles": [
+    // --------------------------------------------------------------------------------------------
+    {
+      "testName": "Every syntax feature",
+
+      "testInputs": [
+        "test-tool --global-flag",
+        "test-tool --global-flag do-thing --action-flag",
+        "test-tool do-thing --action-flag --global-flag"
+      ],
+
+      "spec": {
+        /**
+         * The expected name of the binary, for use in the generated documentation.
+         * The binary name can be optionally overridden at runtime.
+         */
+        "toolName": "test-tool",
+
+        /**
+         * Global parameters can be used anywhere in the command line.
+         * They cannot be associated with an action.  If your syntax does not use actions,
+         * then all of its parameters should be defined as global parameters.
+         */
+        "globalParameters": [
+          {
+            "kind": "flag",
+            "longName": "--global-flag",
+            "shortName": "-g",
+            "description": "Example global flag",
+            "required": false
+          }
+        ],
+
+        /**
+         * Action parameters are defined centrally, and then associated with actions.
+         */
+        "actionParameters": [
+          {
+            "kind": "flag",
+            "longName": "--action-flag",
+            "shortName": "-f",
+            "description": "Example action flag parameter",
+            "required": false
+          },
+          {
+            "kind": "string",
+            "longName": "--action-string",
+            "shortName": "-s",
+            "argumentName": "VALUE",
+            "description": "Example action string parameter",
+            "required": false
+          }
+        ],
+
+        "actions": [
+           {
+            "actionName": "do-thing",
+            "description": "Example action",
+            "associatedParameters": ["--action-flag", "--action-string"]
+          },
+
+          {
+            "actionName": "other-thing",
+            "description": "Example other action",
+            "associatedParameters": []
+          },
+        ]
+      }
+    }
+  ]
+}
