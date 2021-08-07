@@ -44,7 +44,7 @@ export interface ICliStringParameter extends ICliParameterWithArgumentBase {
   kind: 'string';
 }
 
-type CliParameter = ICliFlagParameter | ICliStringParameter;
+export type CliParameter = ICliFlagParameter | ICliStringParameter;
 
 export interface ICliAction {
   /**
@@ -64,6 +64,8 @@ export interface ICliAction {
    * the "description" is used, but truncated to
    */
   summary?: string;
+
+  associatedParameterLongNames: string[];
 }
 
 export interface ICliSpec {
@@ -73,5 +75,5 @@ export interface ICliSpec {
 
   actionParameters: CliParameter[];
 
-  actions: ICliAction;
+  actions: ICliAction[];
 }

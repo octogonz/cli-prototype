@@ -2,21 +2,25 @@
 
 exports[`CliParser Every syntax feature 1`] = `
 Object {
-  "_testInput": "test-tool --global-flag",
-  "result": Object {},
-}
-`;
-
-exports[`CliParser Every syntax feature 2`] = `
-Object {
-  "_testInput": "test-tool --global-flag do-thing --action-flag",
-  "result": Object {},
-}
-`;
-
-exports[`CliParser Every syntax feature 3`] = `
-Object {
-  "_testInput": "test-tool do-thing --action-flag --global-flag",
-  "result": Object {},
+  "_testInput": Array [
+    "--global-flag",
+  ],
+  "result": Object {
+    "errorMessage": undefined,
+    "parameterResultsByIdentifier": Object {
+      "globalFlag": Object {
+        "token": Object {
+          "kind": "LongParameter",
+          "tokenIndex": 0,
+          "value": "--global-flag",
+        },
+        "value": true,
+      },
+      "globalString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+    },
+  },
 }
 `;

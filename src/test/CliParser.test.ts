@@ -5,7 +5,7 @@ import { CliParser } from '../CliParser';
 
 export interface ITestProfile {
   testName: string;
-  testInputs: string[];
+  testInputs: string[][];
   spec: ICliSpec;
 }
 

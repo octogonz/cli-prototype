@@ -5,9 +5,9 @@
       "testName": "Every syntax feature",
 
       "testInputs": [
-        "test-tool --global-flag",
-        "test-tool --global-flag do-thing --action-flag",
-        "test-tool do-thing --action-flag --global-flag"
+        ["--global-flag"],
+        //["--global-flag", "do-thing", "--action-flag"],
+        //["do-thing", "--action-flag", "--global-flag"]
       ],
 
       "spec": {
@@ -26,8 +26,15 @@
           {
             "kind": "flag",
             "longName": "--global-flag",
-            "shortName": "-g",
+            "shortName": "-a",
             "description": "Example global flag",
+            "required": false
+          },
+          {
+            "kind": "string",
+            "longName": "--global-string",
+            "shortName": "-b",
+            "description": "Example global string",
             "required": false
           }
         ],
@@ -39,14 +46,14 @@
           {
             "kind": "flag",
             "longName": "--action-flag",
-            "shortName": "-f",
+            "shortName": "-c",
             "description": "Example action flag parameter",
             "required": false
           },
           {
             "kind": "string",
             "longName": "--action-string",
-            "shortName": "-s",
+            "shortName": "-d",
             "argumentName": "VALUE",
             "description": "Example action string parameter",
             "required": false
@@ -54,17 +61,17 @@
         ],
 
         "actions": [
-           {
+          {
             "actionName": "do-thing",
             "description": "Example action",
-            "associatedParameters": ["--action-flag", "--action-string"]
+            "associatedParameterLongNames": ["--action-flag", "--action-string"]
           },
 
           {
             "actionName": "other-thing",
             "description": "Example other action",
-            "associatedParameters": []
-          },
+            "associatedParameterLongNames": []
+          }
         ]
       }
     }
