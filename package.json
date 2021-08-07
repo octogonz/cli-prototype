@@ -8,11 +8,15 @@
   "scripts": {
     "build": "heft test --clean"
   },
+  "dependencies": {
+    "@rushstack/node-core-library": "~3.39.1"
+  },
   "devDependencies": {
-    "@rushstack/eslint-config": "^2.3.4",
-    "@rushstack/heft": "^0.33.0",
-    "@rushstack/heft-node-rig": "^1.0.31",
+    "@rushstack/eslint-config": "^2.4.0",
+    "@rushstack/heft": "^0.35.0",
+    "@rushstack/heft-node-rig": "^1.1.14",
     "@types/heft-jest": "1.0.2",
-    "@types/node": "10.17.13"
+    "@types/node": "10.17.13",
+    "eslint": "^7.32.0"
   }
 }
