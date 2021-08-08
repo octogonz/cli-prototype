@@ -24,3 +24,28 @@ Object {
   },
 }
 `;
+
+exports[`CliParser Every syntax feature 2`] = `
+Object {
+  "_testInput": Array [
+    "-a",
+  ],
+  "result": Object {
+    "errorMessage": undefined,
+    "parameterResultsByIdentifier": Object {
+      "globalFlag": Object {
+        "token": Object {
+          "kind": "ShortParameter",
+          "tokenIndex": 0,
+          "value": "-a",
+        },
+        "value": true,
+      },
+      "globalString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+    },
+  },
+}
+`;

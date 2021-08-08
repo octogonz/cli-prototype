@@ -108,7 +108,7 @@ export class CliParser {
 
     this._parametersByLongName.set(parameter.longName, parameterDetail);
     if (parameter.shortName) {
-      this._parametersByShortName.set(parameter.longName, parameterDetail);
+      this._parametersByShortName.set(parameter.shortName, parameterDetail);
     }
 
     return parameterDetail;
@@ -135,7 +135,7 @@ export class CliParser {
         case TokenKind.Error:
           parserState.result.errorMessage = currentToken.errorMessage!;
           break;
-        case TokenKind.LongParameter:
+        case TokenKind.LongParameter: {
           parserState.tokenStream.advance();
 
           const parameter: ParameterDetail | undefined = this._parametersByLongName.get(currentToken.value);
@@ -145,6 +145,19 @@ export class CliParser {
           }
           this._parseParameter(parameter, currentToken, parserState);
           break;
+        }
+
+        case TokenKind.ShortParameter: {
+          parserState.tokenStream.advance();
+
+          const parameter: ParameterDetail | undefined = this._parametersByShortName.get(currentToken.value);
+          if (parameter === undefined) {
+            parserState.result.errorMessage = `Unrecognized command line parameter "${currentToken.value}"`;
+            break;
+          }
+          this._parseParameter(parameter, currentToken, parserState);
+          break;
+        }
 
         default:
           throw new InternalError('Unimplemented TokenKind');
