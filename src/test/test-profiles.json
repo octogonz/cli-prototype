@@ -6,9 +6,9 @@
 
       "testInputs": [
         ["--global-flag"],
-        ["-a"]
-        //["--global-flag", "do-thing", "--action-flag"],
-        //["do-thing", "--action-flag", "--global-flag"]
+        ["-a"],
+        ["--global-flag", "do-thing", "--action-flag"],
+        ["do-thing", "--action-flag", "--global-flag"]
       ],
 
       "spec": {

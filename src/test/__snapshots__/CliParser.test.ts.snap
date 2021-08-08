@@ -6,6 +6,7 @@ Object {
     "--global-flag",
   ],
   "result": Object {
+    "actionName": undefined,
     "errorMessage": undefined,
     "parameterResultsByIdentifier": Object {
       "globalFlag": Object {
@@ -31,6 +32,7 @@ Object {
     "-a",
   ],
   "result": Object {
+    "actionName": undefined,
     "errorMessage": undefined,
     "parameterResultsByIdentifier": Object {
       "globalFlag": Object {
@@ -38,6 +40,86 @@ Object {
           "kind": "ShortParameter",
           "tokenIndex": 0,
           "value": "-a",
+        },
+        "value": true,
+      },
+      "globalString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+    },
+  },
+}
+`;
+
+exports[`CliParser Every syntax feature 3`] = `
+Object {
+  "_testInput": Array [
+    "--global-flag",
+    "do-thing",
+    "--action-flag",
+  ],
+  "result": Object {
+    "actionName": "do-thing",
+    "errorMessage": undefined,
+    "parameterResultsByIdentifier": Object {
+      "actionFlag": Object {
+        "token": Object {
+          "kind": "LongParameter",
+          "tokenIndex": 2,
+          "value": "--action-flag",
+        },
+        "value": true,
+      },
+      "actionString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+      "globalFlag": Object {
+        "token": Object {
+          "kind": "LongParameter",
+          "tokenIndex": 0,
+          "value": "--global-flag",
+        },
+        "value": true,
+      },
+      "globalString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+    },
+  },
+}
+`;
+
+exports[`CliParser Every syntax feature 4`] = `
+Object {
+  "_testInput": Array [
+    "do-thing",
+    "--action-flag",
+    "--global-flag",
+  ],
+  "result": Object {
+    "actionName": "do-thing",
+    "errorMessage": undefined,
+    "parameterResultsByIdentifier": Object {
+      "actionFlag": Object {
+        "token": Object {
+          "kind": "LongParameter",
+          "tokenIndex": 1,
+          "value": "--action-flag",
+        },
+        "value": true,
+      },
+      "actionString": Object {
+        "token": undefined,
+        "value": undefined,
+      },
+      "globalFlag": Object {
+        "token": Object {
+          "kind": "LongParameter",
+          "tokenIndex": 2,
+          "value": "--global-flag",
         },
         "value": true,
       },

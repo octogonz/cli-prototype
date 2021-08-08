@@ -1,4 +1,4 @@
-import { InternalError } from '@rushstack/node-core-library';
+import { InternalError, Text } from '@rushstack/node-core-library';
 
 import { TokenStream, TokenKind, IToken } from './TokenStream';
 import { ICliSpec, CliParameter, ICliAction } from './CliSpec';
@@ -20,6 +20,8 @@ export interface IParsedParameterResult {
 export interface IParsedResult {
   parameterResultsByIdentifier: Record<string, IParsedParameterResult>;
 
+  actionName: string | undefined;
+
   errorMessage: string | undefined;
 }
 
@@ -34,6 +36,7 @@ class ParserState {
     this.tokenStream = new TokenStream(args);
     this.result = {
       parameterResultsByIdentifier: {},
+      actionName: undefined,
       errorMessage: undefined
     };
   }
@@ -135,6 +138,7 @@ export class CliParser {
         case TokenKind.Error:
           parserState.result.errorMessage = currentToken.errorMessage!;
           break;
+
         case TokenKind.LongParameter: {
           parserState.tokenStream.advance();
 
@@ -156,6 +160,42 @@ export class CliParser {
             break;
           }
           this._parseParameter(parameter, currentToken, parserState);
+          break;
+        }
+
+        case TokenKind.Literal: {
+          parserState.tokenStream.advance();
+
+          if (parserState.result.actionName !== undefined) {
+            const truncatedName: string = Text.truncateWithEllipsis(currentToken.value, 20);
+            parserState.result.errorMessage = `Invalid token "${JSON.stringify(truncatedName)}"`;
+            break;
+          }
+
+          // Assume it must be an action name
+          const action: IActionDetail | undefined = this._actionsByName.get(currentToken.value);
+          if (!action) {
+            const possibleActionNames: string = Array.from(this._actionsByName.keys()).sort().join(', ');
+
+            if (!TokenSyntax.actionNameRegExp.test(currentToken.value)) {
+              const truncatedName: string = Text.truncateWithEllipsis(currentToken.value, 20);
+
+              parserState.result.errorMessage =
+                `Invalid token "${JSON.stringify(truncatedName)}"; expecting` +
+                ' an action name such as:\n' +
+                possibleActionNames;
+              break;
+            } else {
+              parserState.result.errorMessage =
+                `Unknown action name "${currentToken.value}"; the available actions are:\n` +
+                possibleActionNames;
+              break;
+            }
+          }
+
+          this._createParameterValues(parserState, action.associatedParameters);
+          parserState.result.actionName = action.actionName;
+
           break;
         }
 
@@ -212,6 +252,7 @@ export class CliParser {
 
         result.value = argumentToken.value;
         return;
+
       default:
         throw new InternalError(`Unimplemented parameter kind`);
     }
